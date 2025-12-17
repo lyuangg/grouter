@@ -1,0 +1,35 @@
+# Go build artifacts
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.test
+*.out
+
+# Coverage / profiling
+*.cover
+coverage.out
+*.prof
+*.pprof
+
+# Go workspace files
+go.work
+go.work.sum
+
+# Local tooling / temp
+tmp/
+temp/
+*.tmp
+*.log
+
+# IDE/editor
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
