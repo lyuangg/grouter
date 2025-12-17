@@ -1,4 +1,4 @@
-# GRoute
+# GRouter
 
 [English](README.md) | 中文
 
@@ -30,7 +30,7 @@ import (
 )
 
 func main() {
-	r := groute.NewRouter()
+	r := grouter.NewRouter()
 
 	r.Get("/", func(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusOK)
@@ -46,7 +46,7 @@ func main() {
 你可以用便捷方法注册特定 HTTP 方法，也可以用 `Handle/HandleFunc` 注册任意模式。
 
 ```go
-r := groute.NewRouter()
+r := grouter.NewRouter()
 
 r.Get("/healthz", func(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
@@ -63,7 +63,7 @@ r.HandleFunc("POST /users", func(w http.ResponseWriter, r *http.Request) {
 GRoute 直接使用标准库 `http.ServeMux` 的路径参数；在 handler 里用 `r.PathValue(name)` 取值。
 
 ```go
-r := groute.NewRouter()
+r := grouter.NewRouter()
 
 r.Get("/user/{id}", func(w http.ResponseWriter, r *http.Request) {
 	id := r.PathValue("id")
@@ -74,7 +74,7 @@ r.Get("/user/{id}", func(w http.ResponseWriter, r *http.Request) {
 ## 通配符
 
 ```go
-r := groute.NewRouter()
+r := grouter.NewRouter()
 
 r.Get("/{pathname...}", func(w http.ResponseWriter, r *http.Request) {
 	p := r.PathValue("pathname")
@@ -87,7 +87,7 @@ r.Get("/{pathname...}", func(w http.ResponseWriter, r *http.Request) {
 `Group(prefix)` 会创建一个共享同一个底层 mux 的子路由器，并自动拼接前缀；子组会继承父组中间件。
 
 ```go
-r := groute.NewRouter()
+r := grouter.NewRouter()
 
 api := r.Group("/api")
 api.Get("/users", func(w http.ResponseWriter, r *http.Request) {
@@ -111,11 +111,11 @@ type Middleware func(http.HandlerFunc) http.HandlerFunc
 使用示例：
 
 ```go
-r := groute.NewRouter()
+r := grouter.NewRouter()
 
 r.Use(func(next http.HandlerFunc) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		w.Header().Set("X-Powered-By", "groute")
+		w.Header().Set("X-Powered-By", "grouter")
 		next(w, r)
 	}
 })

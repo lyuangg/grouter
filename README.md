@@ -1,4 +1,4 @@
-# GRoute
+# GRouter
 
 English | [中文](README.zh-CN.md)
 
@@ -30,7 +30,7 @@ import (
 )
 
 func main() {
-	r := groute.NewRouter()
+	r := grouter.NewRouter()
 
 	r.Get("/", func(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusOK)
@@ -46,7 +46,7 @@ func main() {
 You can register method-specific routes via helpers, or use `Handle/HandleFunc` for arbitrary patterns.
 
 ```go
-r := groute.NewRouter()
+r := grouter.NewRouter()
 
 r.Get("/healthz", func(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
@@ -63,7 +63,7 @@ r.HandleFunc("POST /users", func(w http.ResponseWriter, r *http.Request) {
 GRoute uses Go standard library `http.ServeMux` path params; use `r.PathValue(name)` in handlers.
 
 ```go
-r := groute.NewRouter()
+r := grouter.NewRouter()
 
 r.Get("/user/{id}", func(w http.ResponseWriter, r *http.Request) {
 	id := r.PathValue("id")
@@ -74,7 +74,7 @@ r.Get("/user/{id}", func(w http.ResponseWriter, r *http.Request) {
 ## Wildcards
 
 ```go
-r := groute.NewRouter()
+r := grouter.NewRouter()
 
 r.Get("/{pathname...}", func(w http.ResponseWriter, r *http.Request) {
 	p := r.PathValue("pathname")
@@ -87,7 +87,7 @@ r.Get("/{pathname...}", func(w http.ResponseWriter, r *http.Request) {
 `Group(prefix)` creates a sub-router sharing the same underlying mux, with an added path prefix; middlewares are inherited.
 
 ```go
-r := groute.NewRouter()
+r := grouter.NewRouter()
 
 api := r.Group("/api")
 api.Get("/users", func(w http.ResponseWriter, r *http.Request) {
@@ -111,11 +111,11 @@ type Middleware func(http.HandlerFunc) http.HandlerFunc
 Example:
 
 ```go
-r := groute.NewRouter()
+r := grouter.NewRouter()
 
 r.Use(func(next http.HandlerFunc) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		w.Header().Set("X-Powered-By", "groute")
+		w.Header().Set("X-Powered-By", "grouter")
 		next(w, r)
 	}
 })
